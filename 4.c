@@ -53,3 +53,37 @@ void display() {
     while(temp != NULL) {
         printf("%d ", temp->info);
         temp = temp->rlink;
+    }
+}
+
+void del() {
+    int item;
+    if(first == NULL) {
+        printf("\nList is empty");
+        return;
+    }
+    printf("Enter the item to delete: ");
+    scanf("%d", &item);
+    cur = first;
+    while(cur != NULL) {
+        if(cur->info == item) {
+            if(cur == first) {
+                first = first->rlink;
+                first->llink = NULL;
+                free(cur);
+                return;
+            } else if(cur->rlink == NULL) {
+                cur->llink->rlink = NULL;
+                free(cur);
+                return;
+            } else {
+                cur->llink->rlink = cur->rlink;
+                cur->rlink->llink = cur->llink;
+                free(cur);
+                return;
+            }
+        }
+        cur = cur->rlink;
+    }
+    printf("Item not found");
+}
